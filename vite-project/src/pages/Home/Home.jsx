@@ -6,7 +6,6 @@ function Home({}) {
 
     return (
         <div className={styles.pageContent}>
-            <h1>Home Page</h1>
             <Mapa />
         </div>
     );
