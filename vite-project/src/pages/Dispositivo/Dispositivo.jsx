@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import TabelaLeituras from '../../components/TabelaLeituras/TabelaLeituras';
+import NivelBueiro from '../../components/NivelBueiro/NivelBueiro';
 import styles from './Dispositivo.module.css';
 import axios from 'axios';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-function Dispositivo() {
+function Dispositivo({}) {
+    const [mostrarTabela, setMostrarTabela] = useState(true);
+
     const [searchParams] = useSearchParams();
     const dispositivoId = searchParams.get('id');
 
@@ -41,30 +45,23 @@ function Dispositivo() {
     <div className={styles.container}>
         <h1 className={styles.titulo}>Dispositivo {dispositivoId}</h1>
         <p className={styles.subtitulo}>Total de leituras: {leituras.length}</p>
-
-        <div className={styles.tabelaContainer}>
-        <table className={styles.tabela}>
-            <thead>
-            <tr>
-                <th>Distância</th>
-                <th>Horário</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>MAC</th>
-            </tr>
-            </thead>
-            <tbody>
-            {leituras.map((leitura, index) => (
-                <tr key={index}>
-                <td>{leitura.distancia} cm</td>
-                <td>{new Date(leitura.timestamp).toLocaleString()}</td>
-                <td>{leitura.latitude.toFixed(6)}</td>
-                <td>{leitura.longitude.toFixed(6)}</td>
-                <td>{leitura.mac}</td>
-                </tr>
-            ))}
-            </tbody>
-        </table>
+        <div className={styles.conteudo}>
+            <div className={styles.tabelaContainer}>
+                <button
+                    className={styles.botaoToggle}
+                    onClick={() => setMostrarTabela((prev) => !prev)}
+                >
+                    {mostrarTabela ? 'Esconder Leituras' : 'Mostrar Leituras'}
+                </button>
+                {mostrarTabela && <TabelaLeituras leituras={leituras} />}
+            </div>
+            <div className={styles.nivelContainer}>
+                {leituras.length > 0 ? (
+                    <NivelBueiro leituraAtual={leituras[leituras.length - 1].distancia} distanciaMax={100} />
+                ) : (
+                    <p className={styles.aviso}>Nenhuma leitura disponível.</p>
+                )}
+            </div>
         </div>
     </div>
     );

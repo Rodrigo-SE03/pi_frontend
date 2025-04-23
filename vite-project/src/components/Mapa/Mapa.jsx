@@ -43,13 +43,13 @@ function Mapa ({}) {
     <MapContainer
         center={[-16.6869, -49.2648]}
         zoom={12}
-        scrollWheelZoom={false}
+        // scrollWheelZoom={false}
         zoomControl={true}
-        dragging={false}
-        doubleClickZoom={false}
-        touchZoom={false}
+        // dragging={false}
+        // doubleClickZoom={false}
+        // touchZoom={false}
         className={styles.mapa}
-        minZoom={12}
+        minZoom={6}
         maxZoom={13}
     >
         <TileLayer
