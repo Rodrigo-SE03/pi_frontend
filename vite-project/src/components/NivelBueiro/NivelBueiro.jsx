@@ -1,17 +1,19 @@
 import styles from './NivelBueiro.module.css';
 import { CheckCircle, AlertTriangle, AlertCircle } from 'lucide-react';
+import { classificarBueiro, calcularPercentual } from '../../utils/classificarNivelBueiro';
 
 function NivelBueiro({ leituraAtual }) {
-    const distanciaMax = 150
-    const percentual = Math.max(0, Math.min(100, ((distanciaMax - leituraAtual) / distanciaMax) * 100));
+    const distanciaMax = 110
+    const percentual = calcularPercentual(leituraAtual);
 
     let Icone;
     let cor;
+    const status = classificarBueiro(leituraAtual);
 
-    if (percentual <= 30) {
+    if (status === "limpo") {
         Icone = CheckCircle;
         cor = "#4caf50";
-    } else if (percentual <= 60) {
+    } else if (status === "parcial") {
         Icone = AlertTriangle;
         cor = "#ffb300";
     } else {

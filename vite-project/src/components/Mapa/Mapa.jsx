@@ -1,6 +1,5 @@
-// src/components/Mapa.jsx
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
+import useLeituras from '../../utils/useLeituras';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +9,7 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 function Mapa ({}) {
     const navigate = useNavigate();
-    const [pontos, setPontos] = useState([]);
+    const pontos = useLeituras();
 
     useEffect(() => {
         const buscarLocalizacoes = async () => {
@@ -26,8 +25,6 @@ function Mapa ({}) {
                 return acc;
               }, {})
             );
-      
-            setPontos(porMacMaisRecente);
           } catch (erro) {
             console.error('Erro ao buscar localizações:', erro);
           }
@@ -49,8 +46,8 @@ function Mapa ({}) {
         // doubleClickZoom={false}
         // touchZoom={false}
         className={styles.mapa}
-        minZoom={6}
-        maxZoom={13}
+        minZoom={4}
+        maxZoom={16}
     >
         <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
