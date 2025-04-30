@@ -5,7 +5,7 @@ import styles from './Overview.module.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Overview({ handleHover }) {
+function Overview({ handleHover, handleMacHover }) {
     const leituras = useLeituras();
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(null);
@@ -43,7 +43,13 @@ function Overview({ handleHover }) {
                 {expanded === 'limpo' && (
                     <ul className={`${styles.listaDispositivos} ${styles[expanded]}`}>
                         {dispositivos.limpo.map((d) => (
-                            <li key={d.mac} onClick={() => navigate(`/dispositivo?id=${d.mac}`)} className={styles.linkDispositivo}>
+                            <li 
+                                key={d.mac} 
+                                onClick={() => navigate(`/dispositivo?id=${d.mac}`)} 
+                                className={styles.linkDispositivo} 
+                                onMouseEnter={() => handleMacHover(d.mac)} 
+                                onMouseLeave={() => handleMacHover(null)}
+                            >
                                 {d.rua}
                             </li>
                         ))}
@@ -64,7 +70,13 @@ function Overview({ handleHover }) {
                 {expanded === 'parcial' && (
                     <ul className={`${styles.listaDispositivos} ${styles[expanded]}`}>
                         {dispositivos.parcial.map((d) => (
-                            <li key={d.mac} onClick={() => navigate(`/dispositivo?id=${d.mac}`)} className={styles.linkDispositivo}>
+                            <li 
+                                key={d.mac} 
+                                onClick={() => navigate(`/dispositivo?id=${d.mac}`)} 
+                                className={styles.linkDispositivo} 
+                                onMouseEnter={() => handleMacHover(d.mac)} 
+                                onMouseLeave={() => handleMacHover(null)}
+                            >
                                 {d.rua}
                             </li>
                         ))}
@@ -85,7 +97,13 @@ function Overview({ handleHover }) {
                 {expanded === 'cheio' && (
                     <ul className={`${styles.listaDispositivos} ${styles[expanded]}`}>
                         {dispositivos.cheio.map((d) => (
-                            <li key={d.mac} onClick={() => navigate(`/dispositivo?id=${d.mac}`)} className={styles.linkDispositivo}>
+                            <li 
+                                key={d.mac} 
+                                onClick={() => navigate(`/dispositivo?id=${d.mac}`)} 
+                                className={styles.linkDispositivo} 
+                                onMouseEnter={() => handleMacHover(d.mac)} 
+                                onMouseLeave={() => handleMacHover(null)}
+                            >
                                 {d.rua}
                             </li>
                         ))}

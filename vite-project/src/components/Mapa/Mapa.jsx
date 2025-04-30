@@ -69,7 +69,7 @@ const highlightedIcon = (status) => {
   return greenIconHighlight;
 };
 
-function Mapa ({ hovered=null }) {
+function Mapa ({ hovered=null, hoveredMac=null }) {
     const navigate = useNavigate();
     const pontos = useLeituras();
     useEffect(() => {
@@ -112,11 +112,18 @@ function Mapa ({ hovered=null }) {
         />
         {pontos.map((ponto, i) => {
           const classificacao = classificarBueiro(ponto.distancia);
-          const isHighlighted = hovered ? (classificacao === hovered) : false;
-          const icon = isHighlighted ? highlightedIcon(classificacao) : normalIcon(classificacao);
+          const isStatusHighlighted = hovered ? (classificacao === hovered) : false;
+          const isMacHighlighted = hoveredMac === ponto.mac;
+          const icon = isStatusHighlighted || isMacHighlighted
+            ? highlightedIcon(classificacao)
+            : normalIcon(classificacao);
+        
+          const opacity = (hovered || hoveredMac)
+            ? ((isStatusHighlighted || isMacHighlighted) ? 1 : 0.5)
+            : 1;
 
           return (
-            <Marker key={i} position={[ponto.latitude, ponto.longitude]} icon={icon} opacity={hovered ? (isHighlighted ? 1 : 0.5) : 1}>
+            <Marker key={i} position={[ponto.latitude, ponto.longitude]} icon={icon} opacity={opacity}>
               <Popup>
                 <button
                   onClick={() => navigate(`/dispositivo?id=${ponto.mac}`)}

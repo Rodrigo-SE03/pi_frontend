@@ -5,17 +5,14 @@ import { useState } from "react";
 
 function Home({}) {
     const [hoveredStatus, setHoveredStatus] = useState(null);
-
-    const handleHover = (status) => {
-        setHoveredStatus(status);
-    }
+    const [hoveredMac, setHoveredMac] = useState(null);
 
     return (
         <div className={styles.pageContent}>
             <h1>Bueiros Inteligentes</h1>
             <div className={styles.contentContainer}>
-                <Overview handleHover={handleHover} />
-                <Mapa hovered={hoveredStatus} />
+                <Overview handleHover={setHoveredStatus} handleMacHover={setHoveredMac} />
+                <Mapa hovered={hoveredStatus} hoveredMac={hoveredMac} />
             </div>  
         </div>
     );
