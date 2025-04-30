@@ -1,38 +1,96 @@
-import { CheckCircle, AlertTriangle, AlertCircle } from 'lucide-react';
+import { CheckCircle, AlertTriangle, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import useLeituras from '../../utils/useLeituras';
 import { classificarBueiro } from '../../utils/classificarNivelBueiro';
 import styles from './Overview.module.css';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function Overview({}) {
+function Overview({ handleHover }) {
     const leituras = useLeituras();
+    const navigate = useNavigate();
+    const [expanded, setExpanded] = useState(null);
 
-    const { limpos, parciais, cheios } = leituras.reduce(
-        (acc, leitura) => {
-            console.log(leitura);
-            const status = classificarBueiro(leitura.distancia);
-            if (status === "limpo") acc.limpos++;
-            else if (status === "parcial") acc.parciais++;
-            else acc.cheios++;
-            return acc;
-        },
-        { limpos: 0, parciais: 0, cheios: 0 }
-    );
+    const dispositivos = {
+        limpo: [],
+        parcial: [],
+        cheio: []
+    };
+
+    leituras.forEach(leitura => {
+        const status = classificarBueiro(leitura.distancia);
+        dispositivos[status].push(leitura);
+    });
+
+    const toggleExpand = (status) => {
+        setExpanded(prev => prev === status ? null : status);
+    };
+
     return (
         <div className={styles.content}>
             <h1>Visão geral</h1>
             <div className={styles.contentContainer}>
-                <div className={styles.limpo}>
+                <div
+                    className={styles.limpo}
+                    onMouseEnter={() => handleHover('limpo')}
+                    onMouseLeave={() => handleHover(null)}
+                >
                     <CheckCircle size={20} color="#4caf50" />
-                    <span>Limpos - {limpos}</span>
+                    <span>Limpos - {dispositivos.limpo.length}</span>
+                    <button className={styles.expandBtn} onClick={() => toggleExpand('limpo')}>
+                        {expanded === 'limpo' ? <ChevronUp size={20} color="#4caf50" /> : <ChevronDown size={20} color="#4caf50" />}
+                    </button>
                 </div>
-                <div className={styles.parcial}>
+                {expanded === 'limpo' && (
+                    <ul className={`${styles.listaDispositivos} ${styles[expanded]}`}>
+                        {dispositivos.limpo.map((d) => (
+                            <li key={d.mac} onClick={() => navigate(`/dispositivo?id=${d.mac}`)} className={styles.linkDispositivo}>
+                                {d.rua}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+
+                <div
+                    className={styles.parcial}
+                    onMouseEnter={() => handleHover('parcial')}
+                    onMouseLeave={() => handleHover(null)}
+                >
                     <AlertTriangle size={26} color="#ffb300" />
-                    <span>Parcialmente cheios - {parciais}</span>
+                    <span>Parcialmente cheios - {dispositivos.parcial.length}</span>
+                    <button className={styles.expandBtn} onClick={() => toggleExpand('parcial')}>
+                        {expanded === 'parcial' ? <ChevronUp size={20} color="#ffb300" /> : <ChevronDown size={20} color="#ffb300" />}
+                    </button>
                 </div>
-                <div className={styles.cheio}>
+                {expanded === 'parcial' && (
+                    <ul className={`${styles.listaDispositivos} ${styles[expanded]}`}>
+                        {dispositivos.parcial.map((d) => (
+                            <li key={d.mac} onClick={() => navigate(`/dispositivo?id=${d.mac}`)} className={styles.linkDispositivo}>
+                                {d.rua}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+
+                <div
+                    className={styles.cheio}
+                    onMouseEnter={() => handleHover('cheio')}
+                    onMouseLeave={() => handleHover(null)}
+                >
                     <AlertCircle size={20} color="#e53935" />
-                    <span>Cheios - {cheios}</span>
+                    <span>Cheios - {dispositivos.cheio.length}</span>
+                    <button className={styles.expandBtn} onClick={() => toggleExpand('cheio')}>
+                        {expanded === 'cheio' ? <ChevronUp size={20} color="#e53935" /> : <ChevronDown size={20} color="#e53935" />}
+                    </button>
                 </div>
+                {expanded === 'cheio' && (
+                    <ul className={`${styles.listaDispositivos} ${styles[expanded]}`}>
+                        {dispositivos.cheio.map((d) => (
+                            <li key={d.mac} onClick={() => navigate(`/dispositivo?id=${d.mac}`)} className={styles.linkDispositivo}>
+                                {d.rua}
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </div>
         </div>
     );
