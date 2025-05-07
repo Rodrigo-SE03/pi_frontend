@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import TabelaLeituras from '../../components/TabelaLeituras/TabelaLeituras';
 import NivelBueiro from '../../components/NivelBueiro/NivelBueiro';
+import GraficoDispositivo from '../../components/Graficos/GraficoDispositivo/GraficoDispositivo';
 import styles from './Dispositivo.module.css';
 import axios from 'axios';
 
@@ -53,7 +54,11 @@ function Dispositivo({}) {
                 >
                     {mostrarTabela ? 'Esconder Leituras' : 'Mostrar Leituras'}
                 </button>
-                {mostrarTabela && <TabelaLeituras leituras={leituras} />}
+                {mostrarTabela ? (
+                    <TabelaLeituras leituras={leituras} />
+                ) : (
+                    <GraficoDispositivo mac_id={dispositivoId} leituras={leituras} />
+                )}
             </div>
             <div className={styles.nivelContainer}>
                 {leituras.length > 0 ? (
