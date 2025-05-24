@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import useLeituras from '../../utils/useLeituras';
 import { classificarBueiro } from '../../utils/classificarNivelBueiro';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import L from 'leaflet';
@@ -9,6 +9,9 @@ import greenIconImg from '../../assets/green_gps.png';
 import orangeIconImg from '../../assets/orange_gps.png';
 import redIconImg from '../../assets/red_gps.png';
 import styles from './Mapa.module.css';
+import RoutingControl from "./RoutingControl";
+
+
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -69,8 +72,10 @@ const highlightedIcon = (status) => {
   return greenIconHighlight;
 };
 
-function Mapa ({ hovered=null, hoveredMac=null }) {
+function Mapa ({ hovered=null, hoveredMac=null, rotaIdeal = [] }) {
     const navigate = useNavigate();
+    const mapRef = useRef();
+    const routingControlRef = useRef(null);
     const pontos = useLeituras();
     useEffect(() => {
         const buscarLocalizacoes = async () => {
@@ -105,11 +110,15 @@ function Mapa ({ hovered=null, hoveredMac=null }) {
         className={styles.mapa}
         minZoom={4}
         maxZoom={16}
+        whenCreated={(mapInstance) => {
+          mapRef.current = mapInstance;
+        }}
     >
         <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        <RoutingControl rota={rotaIdeal} />
         {pontos.map((ponto, i) => {
           const classificacao = classificarBueiro(ponto.distancia);
           const isStatusHighlighted = hovered ? (classificacao === hovered) : false;

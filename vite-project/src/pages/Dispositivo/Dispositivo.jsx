@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 import TabelaLeituras from '../../components/TabelaLeituras/TabelaLeituras';
 import NivelBueiro from '../../components/NivelBueiro/NivelBueiro';
 import GraficoDispositivo from '../../components/Graficos/GraficoDispositivo/GraficoDispositivo';
@@ -44,6 +45,7 @@ function Dispositivo({}) {
 
     return (
     <div className={styles.container}>
+        <ArrowLeft onClick={() => window.history.back()} style={{ cursor: 'pointer' }} />
         <h1 className={styles.titulo}>Dispositivo {dispositivoId}</h1>
         <p className={styles.subtitulo}>Total de leituras: {leituras.length}</p>
         <div className={styles.conteudo}>
