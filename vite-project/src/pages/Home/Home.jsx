@@ -26,10 +26,9 @@ function Home({}) {
         <div className={styles.pageContent}>
             <h1>Bueiros Inteligentes</h1>
             <div className={styles.contentContainer}>
-                <Overview handleHover={setHoveredStatus} handleMacHover={setHoveredMac} />
+                <Overview handleHover={setHoveredStatus} handleMacHover={setHoveredMac} calcularRota={calcularRota} />
                 <Mapa hovered={hoveredStatus} hoveredMac={hoveredMac} rotaIdeal={rotaIdeal} />
-                <button onClick={calcularRota}>Calcular Rota</button>
-            </div>  
+            </div>
         </div>
     );
 } 

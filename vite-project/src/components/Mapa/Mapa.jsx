@@ -119,6 +119,11 @@ function Mapa ({ hovered=null, hoveredMac=null, rotaIdeal = [] }) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <RoutingControl rota={rotaIdeal} />
+        {rotaIdeal.length > 0 && (
+          <Marker position={[rotaIdeal[0].latitude, rotaIdeal[0].longitude]}>
+            <Popup>Ponto inicial da rota</Popup>
+          </Marker>
+        )}
         {pontos.map((ponto, i) => {
           const classificacao = classificarBueiro(ponto.distancia);
           const isStatusHighlighted = hovered ? (classificacao === hovered) : false;

@@ -5,7 +5,7 @@ import styles from './Overview.module.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Overview({ handleHover, handleMacHover }) {
+function Overview({ handleHover, handleMacHover, calcularRota }) {
     const leituras = useLeituras();
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(null);
@@ -110,6 +110,7 @@ function Overview({ handleHover, handleMacHover }) {
                     </ul>
                 )}
             </div>
+            <button className={styles.routeButton} onClick={calcularRota}>Calcular Rota</button>
         </div>
     );
 }

@@ -54,7 +54,7 @@ function Dispositivo({}) {
                     className={styles.botaoToggle}
                     onClick={() => setMostrarTabela((prev) => !prev)}
                 >
-                    {mostrarTabela ? 'Esconder Leituras' : 'Mostrar Leituras'}
+                    {mostrarTabela ? 'Exibir Gráfico' : 'Exibir Leituras'}
                 </button>
                 {mostrarTabela ? (
                     <TabelaLeituras leituras={leituras} />

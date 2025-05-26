@@ -132,3 +132,21 @@ h1 {
 .listaDispositivos::-webkit-scrollbar-button {
   display: none;
 }
+
+.routeButton {
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.routeButton:hover {
+    background-color: #0056b3;
+}
