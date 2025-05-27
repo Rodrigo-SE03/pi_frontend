@@ -5,7 +5,7 @@ import styles from './Overview.module.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Overview({ handleHover, handleMacHover, calcularRota }) {
+function Overview({ handleHover, handleMacHover, calcularRota, distanciaRota }) {
     const leituras = useLeituras();
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(null);
@@ -111,6 +111,11 @@ function Overview({ handleHover, handleMacHover, calcularRota }) {
                 )}
             </div>
             <button className={styles.routeButton} onClick={calcularRota}>Calcular Rota</button>
+            {distanciaRota != 0 && (
+                <div className={styles.distanciaRota}>
+                    <span>Distância da rota ideal:<br/>{distanciaRota.toFixed(2)} km</span>
+                </div>
+            )}
         </div>
     );
 }

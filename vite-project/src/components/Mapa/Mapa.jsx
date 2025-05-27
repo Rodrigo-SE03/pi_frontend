@@ -72,7 +72,7 @@ const highlightedIcon = (status) => {
   return greenIconHighlight;
 };
 
-function Mapa ({ hovered=null, hoveredMac=null, rotaIdeal = [] }) {
+function Mapa ({ hovered=null, hoveredMac=null, rotaIdeal = [], setDistanciaRota }) {
     const navigate = useNavigate();
     const mapRef = useRef();
     const routingControlRef = useRef(null);
@@ -118,7 +118,7 @@ function Mapa ({ hovered=null, hoveredMac=null, rotaIdeal = [] }) {
         attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <RoutingControl rota={rotaIdeal} />
+        <RoutingControl rota={rotaIdeal} setDistancia={setDistanciaRota} />
         {rotaIdeal.length > 0 && (
           <Marker position={[rotaIdeal[0].latitude, rotaIdeal[0].longitude]}>
             <Popup>Ponto inicial da rota</Popup>

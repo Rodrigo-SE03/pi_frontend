@@ -150,3 +150,16 @@ h1 {
 .routeButton:hover {
     background-color: #0056b3;
 }
+
+.distanciaRota {
+  background-color: #cbd8fc;
+  text-align: center;
+  color: #1a2a4f;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: fit-content;
+  margin: 12px 0;
+}

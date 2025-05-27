@@ -3,7 +3,7 @@ import { useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet-routing-machine";
 
-function RoutingControl({ rota }) {
+function RoutingControl({ rota, setDistancia  }) {
   const map = useMap();
   const routingRef = useRef(null);
 
@@ -29,7 +29,8 @@ function RoutingControl({ rota }) {
     });
 
     control.on("routesfound", (e) => {
-      console.log("✅ Rota encontrada! Distância:", e.routes[0].summary.totalDistance / 1000, "km");
+      const distanciaKm = e.routes[0].summary.totalDistance / 1000;
+      setDistancia(distanciaKm);
     });
 
     control.on("routingerror", (err) => {
